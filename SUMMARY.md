@@ -50,6 +50,6 @@
 * [ioloop核心I/O循环](ioloop/README.md)
 * [testing测试](testing/README.md)
 * [template模板选择](template/README.md)
-* [tornado案例(example/README.md)]
-* [tornado周边(around/README.md)]
+* [tornado案例](example/README.md)
+* [tornado周边](around/README.md)
 * [进阶话题](advanced/README.md)
