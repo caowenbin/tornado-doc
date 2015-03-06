@@ -27,7 +27,7 @@
 		* [log日志](module/other/log.md)
 		* [wsgi](module/other/wsgi.md)
 	* [小结](module/summary.md)
-* [常见编程模型](programme/README.md)
+* [编程模型](programme/README.md)
 	* [同步编程](programme/sync/README.md)
 		* [同步编程实现](programme/sync/realize.md)
 		* [常见同步语言](programme/sync/lan.md)
