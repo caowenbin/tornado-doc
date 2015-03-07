@@ -44,6 +44,7 @@
 		* [跨站伪造请求](http/secure/xsrf.md)
 		* [常见攻击](http/secure/attack.md)
 		* [安全HTTP](http/secure/https.md)
+	* [负载均衡](http/)
 	* [小结](/http/summary.md)
 * [编程模型](programme/README.md)
 	* [同步编程](programme/sync/README.md)
