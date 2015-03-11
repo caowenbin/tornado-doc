@@ -25,7 +25,7 @@ echo_supervisord_conf > /etc/supervisord.conf
 
 通常来说Tornado进程都会跑好几个，几个依赖于系统负载，最理想的负载是60%（CPU和内存使用）。运行多个实例是为了充分使用现代计算机的多处理器和多核能力。
 
-这里给出我们生产环境当中使用的supervisord配置文件（仅列出Tornado相关部分）。
+这里给出我们在线环境当中使用的supervisord配置文件（仅列出Tornado相关部分）。
 
 ```
 [program:tornadowebs]

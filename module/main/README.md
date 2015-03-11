@@ -1,0 +1,3 @@
+# Tornado主要模块
+
+我们把web，gen，testing，template，locale，options模块划分为主要模块并不是因为它们在Tornado中的价值，而是根据我们平时接触和使用来划分的。这些也是所有Web框架需要实现的部分，您可以很轻松的查看本小结内容。
