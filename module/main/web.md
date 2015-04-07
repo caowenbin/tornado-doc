@@ -110,3 +110,74 @@ My-Header:Hello
 My-Header:world
 Server:MyServer1
 ```
+
+## 输出相关
+
+Tornado提供了基本的函数来方便我们使用输出渲染，包含了输出文本、渲染模板、页面调整、重定向、自定义错误页面。
+
+#### 输出
+
+直接输出文本可以使用write方法。该方法会自动将python 中的dict输出问JSON，并设置 `Content-Type` 为 `application/json`。（如何要禁用该功能，可以在write之后调用set_header）
+
+代码清单2-5 write方法 write.py
+
+```
+class WriteHandler(tornado.web.RequestHandler):
+    def get(self):
+        self.write({"content":"hello tornado."})
+
+class WriteDoNotAutoSetHeaderHandler(tornado.web.RequestHandler):
+    def get(self):
+        self.write({"content":"hello tornado."})
+        self.set_header("Content-Type","text/html")
+```
+
+#### 渲染模板
+
+渲染模板会使用到的方法有：render(template_name,**kwargs)、render_string(template_name, **kwargs)、get_template_namespace()。下面给出使用例子。
+
+代码清单2-6 render渲染模板 render.py
+
+```
+class RenderHandler(tornado.web.RequestHandler):
+    def get(self):
+        books = []
+        for i in xrange(1,10):
+            book = {
+                "id":i,
+                "title":"book title%d"%i
+            }
+            books.append(book)
+        self.render("render.html",books=books)
+    def get_template_namespace(self):
+        namespace = {
+            "title":"hello tornado"
+        }
+        return namespace
+
+class RenderStringHandler(tornado.web.RequestHandler):
+    def get(self):
+        books = []
+        for i in xrange(1,10):
+            book = {
+                "id":i,
+                "title":"book title%d"%i
+            }
+            books.append(book)
+        html = self.render_string('render.html',books=books)
+        self.write(html)
+
+## render.html
+{{title}}
+{%for book in books%}
+<h1>{{book.get("id","")}}</h1>
+<h1>{{book.get("title","")}}</h1>
+{%end%}
+```
+
+#### 重定向
+
+重定向分永久重定向和临时重定向，对应http状态码分别为301和302。一般使用临时重定向302，永久重定向为不可返回。
+
+#### 自定义错误
+
