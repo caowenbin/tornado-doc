@@ -181,3 +181,48 @@ class RenderStringHandler(tornado.web.RequestHandler):
 
 #### 自定义错误
 
+要自定义错误，只需要重写write_error方法，该方法可以直接调用write，render，set_header方法，可用的参数都在 `kwargs[exc_info]`种。
+
+#### Cookies
+
+Cookie保存在客户端，由客户端自己维护，根据“不能相信任何来自客户端的数据”原则，我们不能保存明文，尽量少的信息是比较好的。在Tornado中，提供了两组方法来管理cookie，get_cookie，set_cookie和get_secure_cookie，set_secure_cookie，后者提供了好的安全性。当然path，domain以及expires和其他Web框架都是一样的。
+
+代码清单 2-7 使用Cookies cookies.py
+
+```
+class CookiesHandler(tornado.web.RequestHandler):
+    def get(self,book_id,comment_id):
+        tornado_doc = self.get_cookie("tornado-doc",None)
+        if not tornado_doc:
+            print "has no tornado-doc cookie"
+            self.set_cookie("tornado-doc","hello tornado doc.")
+            return
+
+        assert tornado_doc == "hello tornado doc."
+
+class SecureCookiesHandler(tornado.web.RequestHandler):
+    def get(self,book_id,comment_id):
+        tornado_doc = self.get_secure_cookie("tornado-doc",None)
+        if not tornado_doc:
+            print "has no tornado-doc cookie"
+            self.set_secure_cookie("tornado-doc","hello tornado doc.")
+            return
+            
+        assert tornado_doc == "hello tornado doc."
+
+if __name__ == "__main__":
+    application = tornado.web.Application([
+        (r"/cookies", CookiesHandler),
+        (r"/secure_cookes", SecureCookiesHandler),
+    ],cookie_secret="gjsAFuqQTJymMOGmGxwRu0vqTDQbYkqRqx5aE5Noz3Y=") ## 必须替换为您自己的cookie_secret
+    application.listen(8080)
+    tornado.ioloop.IOLoop.instance().start()
+```
+
+## Application类
+
+在web模块中，除了RequestHandler类接触得最多之外，Application也是我们常使用的。细心的读者应改在前面的例子中注意到Application的使用，它主要处理Tornado的参数配置。下面给出常见的参数及其使用说明。
+
+* 
+
+
